@@ -1,16 +1,19 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { AppsyncAPI } from '../lib/appsync-api';
+import { WebAppFirewall } from '../lib/web-app-firewall';
 
 export class AppsyncApiBehindWafStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
-    super(scope, id, props);
 
-    // The code that defines your stack goes here
+    private backendAPI = new AppsyncAPI(this, 'AppsyncAPI');
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'AppsyncApiBehindWafQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
-  }
+    constructor(scope: Construct, id: string, props?: StackProps) {
+        super(scope, id, props);
+
+        // Adding AWS WAF protection to your AppSync API
+        new WebAppFirewall(this, "WAF", {
+            apiArn: this.backendAPI.api.attrArn
+        });
+
+    }
 }

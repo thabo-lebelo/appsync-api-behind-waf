@@ -1,21 +1,25 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
-import * as cdk from 'aws-cdk-lib';
+import { App } from 'aws-cdk-lib';
 import { AppsyncApiBehindWafStack } from '../lib/appsync-api-behind-waf-stack';
 
-const app = new cdk.App();
-new AppsyncApiBehindWafStack(app, 'AppsyncApiBehindWafStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
+import { AppsyncAPI } from '../lib/appsync-api'
+import { WebAppFirewall } from '../lib/web-app-firewall'
 
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+// const app = new cdk.App();
+// new AppsyncApiBehindWafStack(app, 'AppsyncApiBehindWafStack', {
+//     stackName: "appsync-api-behind-waf ",
+//     description: "Deploying an AWS AppSync API with WAF using CDK v2"
+// });
 
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
+function createCloudFormation(): void {
+    const app = new App();
 
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
-});
+    const appSync = new AppsyncAPI(app, 'Backend');
+
+    new WebAppFirewall(app, 'Firewall', {
+        apiArn: appSync.api.attrArn,
+    });
+}
+
+createCloudFormation();
