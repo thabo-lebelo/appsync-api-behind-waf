@@ -1,0 +1,16 @@
+type Customers {
+	id: String!
+	name: String
+	email: String
+	age: Int
+}
+
+type CustomersConnection {
+	items: [Customers]
+	nextToken: String
+}
+
+type Query {
+	getCustomers(id: String!): Customers
+	listCustomers(nextToken: String): CustomersConnection
+}
