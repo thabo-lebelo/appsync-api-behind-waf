@@ -6,6 +6,7 @@ import { CfnWebACL, CfnWebACLAssociation } from "aws-cdk-lib/aws-wafv2";
 interface Props {
     apiArn: string;
 }
+
 export class WebAppFirewall extends Stack {
 
     // Add Web ACL and rules
