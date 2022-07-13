@@ -1,5 +1,5 @@
-import {Stack} from "aws-cdk-lib";
-import {Construct} from "constructs";
+import { Stack } from "aws-cdk-lib";
+import { Construct } from "constructs";
 import { CfnApiKey, CfnDataSource, CfnGraphQLApi, CfnGraphQLSchema, CfnResolver } from "aws-cdk-lib/aws-appsync";
 import { Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
