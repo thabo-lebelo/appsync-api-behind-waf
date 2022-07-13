@@ -40,8 +40,8 @@ export class AppsyncAPI extends Stack {
         apiId: this.api.attrApiId,
         typeName: "Query",
         fieldName: "getCustomers",
-        requestMappingTemplate: readFileSync("./src/graphql/getCustomers/request.vtl").toString(),
-        responseMappingTemplate: readFileSync("./src/graphql/getCustomers/response.vtl").toString(),
+        requestMappingTemplate: readFileSync("./src/graphql/getCustomer/request.vtl").toString(),
+        responseMappingTemplate: readFileSync("./src/graphql/getCustomer/response.vtl").toString(),
         dataSourceName: this.customersDataSource.name
     });
 
